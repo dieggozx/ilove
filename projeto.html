@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site com Música e Slide</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css" rel="stylesheet"/>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #111;
+            color: #fff;
+        }
+        .container {
+            display: flex;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+        }
+        button {
+            padding: 20px 40px;
+            font-size: 24px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            background-color: #000;
+            color: white;
+            border-radius: 10px;
+            transition: background 0.3s;
+        }
+        button::before {
+            content: '💗 ';
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #222;
+        }
+        .hidden {
+            display: none;
+        }
+        .slider img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .spotify-box {
+            margin: 20px auto;
+            width: 300px;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        .text {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+        .counter {
+            font-size: 18px;
+            margin-top: 10px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid white;
+        }
+    </style>
+</head>
+<body>
+<div class="container" id="inicio">
+    <button onclick="startSite()">Clique</button>
+</div>
+<div class="hidden" id="conteudo">
+    <div class="spotify-box">
+        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/1DLKuppSYytOuxhtI6KBGu?utm_source=generator&autoplay=true" width="100%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+    </div>
+    <div class="slider">
+        <img src="foto1.jpg" alt="Imagem 1">
+        <img src="foto2.jpg" alt="Imagem 2">
+        <img src="foto3.jpg" alt="Imagem 3">
+    </div>
+    <div class="counter" id="contador"></div>
+    <div class="text">Texto passando aqui embaixo da galeria</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+<script>
+    function startSite() {
+        document.getElementById('inicio').classList.add('hidden');
+        document.getElementById('conteudo').classList.remove('hidden');
+        $('.slider').slick({
+            autoplay: true,
+            autoplaySpeed: 3000,
+            dots: false,
+            infinite: true,
+            arrows: false
+        });
+        startCounter();
+    }
+
+    function startCounter() {
+        const startDate = new Date('2023-06-01T00:00:00');
+        const pageEntry = new Date();
+        setInterval(() => {
+            const now = new Date();
+            const totalDiff = now - startDate;
+            const secondsDiff = now - pageEntry;
+
+            const years = Math.floor(totalDiff / (1000 * 60 * 60 * 24 * 365));
+            const months = Math.floor((totalDiff % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
+            const days = Math.floor((totalDiff % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
+            const seconds = Math.floor(secondsDiff / 1000);
+
+            document.getElementById('contador').textContent = `Eu te amo há: ${years} anos, ${months} meses, ${days} dias e ${seconds} segundos`;
+        }, 1000);
+    }
+</script>
+</body>
+</html>
